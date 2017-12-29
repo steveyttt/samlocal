@@ -8,10 +8,7 @@ Docker installed
 Docker hub account created and logged in at terminal
 docker pull lambci/lambda
 
-Set your credentials:  
-export AWS_ACCESS_KEY_ID=  
-export AWS_SECRET_ACCESS_KEY=  
-export REGION=  
+Set your credentials using a creds file with a default profile or by export key variables  
 
 example invocation:  
 Terminal expects a template.yaml  - invoke the function resource inside your template.yml
