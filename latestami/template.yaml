@@ -1,11 +1,12 @@
+---
+###This is a local template only needed when invoking the function using samlocal - https://github.com/awslabs/aws-sam-cli
 AWSTemplateFormatVersion : '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
-Description: A simple function to find latest linux ami
+Description: A simple Hello World Serverless project
 Resources:
-  latestAmi:
+  index:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: nodejs6.10
       Handler: index.handler
-      Timeout: 20
