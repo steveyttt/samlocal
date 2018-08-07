@@ -1,0 +1,30 @@
+---
+###This is a local template only needed when invoking the function using samlocal - https://github.com/awslabs/aws-sam-cli
+AWSTemplateFormatVersion : '2010-09-09'
+
+Transform: AWS::Serverless-2016-10-31
+
+Description: A simple Hello World Serverless project
+
+Resources:
+
+  lists3:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: lists3.handler
+      Timeout: 10
+
+  creates3:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: creates3.handler
+      Timeout: 10
+
+  scrap:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: scrap.handler
+      Timeout: 10
