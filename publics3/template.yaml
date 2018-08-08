@@ -28,3 +28,24 @@ Resources:
       Runtime: nodejs6.10
       Handler: scrap.handler
       Timeout: 10
+
+  createdynamotable:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: createdynamotable.handler
+      Timeout: 20
+
+  putdynamoitem:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: putdynamoitem.handler
+      Timeout: 10
+
+  scandynamo:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Handler: scandynamo.handler
+      Timeout: 10
