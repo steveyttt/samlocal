@@ -51,6 +51,8 @@ Get the bucket policy to restrict put on certain file types
 Add readme for all steps in REPO
 get the lambda to run on cron
 
+
+run commands section
 run this first:
 cloudformation create-stack --stack-name tyson-lambda-s3 --template-body file://cloudformation/lambda-s3-bucket.yaml
 

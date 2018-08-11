@@ -12,7 +12,8 @@ var dynamodb = new aws.DynamoDB({region: 'ap-southeast-2'});
 // This creates a service interface object (function to query the s3 api) - https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
 var s3 = new aws.S3;
 
-//Scan a table for ALL entries
+//Scan a table for ALL entries, iterate through them and for each send a "create s3 bucket api call"
+//Please note this EXPECTS to receive content with a key of "bucketname", if not it will fail
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-property
 function scanDynamo(tableName) {
   dynamodb.scan({TableName: tableName}, function(err, dynamoresults) {
@@ -30,6 +31,8 @@ function scanDynamo(tableName) {
 }
 
 //Create an s3 bucket
+//If bucket already exists simply enforce the bucket policy using addS3BucketPolicy
+//If bucket does not exist then create bucket and then add policy using addS3BucketPolicy
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#createBucket-property
 function CreateS3Bucket(bucketName) {  
   s3.createBucket({Bucket: bucketName, CreateBucketConfiguration: {LocationConstraint: "ap-southeast-2" }}, function(err, data) {
