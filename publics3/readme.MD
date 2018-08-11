@@ -38,17 +38,25 @@ Run a check on all buckets and notify if they are public and NOT in the approved
 Create a dynamo DB table
 Add a set of strings to a dynamo DB table
 Get the strings from dynamo and inject into create bucket command
-
 configure the jobs to be deployed using cloud formation
 - Write the CF
 - Upload the lambda functions to S3
 - Script the cli commands to upload the CF
-add a policy for the lambda function to run on lightest possible permissons
+Tighten to three functions
+add a policy for the lambda function to run on lighter permissons
+Document all code
+
 Get the bucket policy to include Akamai IP’s
 Get the bucket policy to restrict put on certain file types
-Document all code
-Tighten to two functions
-- One to create and populate dynamo
-- One to query dynamo and create S3
-Configure the functions to take more parameters, remove any hard coded values
 Add readme for all steps in REPO
+get the lambda to run on cron
+
+run this first:
+cloudformation create-stack --stack-name tyson-lambda-s3 --template-body file://cloudformation/lambda-s3-bucket.yaml
+
+cd into the code directory and run:
+zip -r ../code .
+
+aws s3 cp code.zip s3://private-test-lambda-tyson/code.zip
+
+cloudformation create-stack --stack-name lambda --template-body file://cloudformation/lambda.yaml --capabilities CAPABILITY_IAM

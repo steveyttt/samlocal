@@ -8,44 +8,36 @@ Description: A simple Hello World Serverless project
 
 Resources:
 
-  lists3:
-    Type: AWS::Serverless::Function
-    Properties:
-      Runtime: nodejs6.10
-      Handler: lists3.handler
-      Timeout: 10
-
   creates3:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: nodejs6.10
       Handler: creates3.handler
       Timeout: 10
+      Environment:
+        Variables:
+          attributeName: bucketname
+          tableName: Public-S3-Buckets
 
-  scrap:
+  createdynamo:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: nodejs6.10
-      Handler: scrap.handler
+      Handler: createdynamo.handler
       Timeout: 10
+      Environment:
+        Variables:
+          attributeName: bucketname
+          tableName: Public-S3-Buckets
 
-  createdynamotable:
+  putdynamo:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: nodejs6.10
-      Handler: createdynamotable.handler
-      Timeout: 20
-
-  putdynamoitem:
-    Type: AWS::Serverless::Function
-    Properties:
-      Runtime: nodejs6.10
-      Handler: putdynamoitem.handler
+      Handler: putdynamo.handler
       Timeout: 10
-
-  scandynamo:
-    Type: AWS::Serverless::Function
-    Properties:
-      Runtime: nodejs6.10
-      Handler: scandynamo.handler
-      Timeout: 10
+      Environment:
+        Variables:
+          item: bucketname
+          tableName: Public-S3-Buckets
+          buckets: zzzzstevetest1 zzzzstevetest123

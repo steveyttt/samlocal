@@ -1,0 +1,123 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: CF to upload lambda functions with an associates policy
+
+Resources:
+
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+
+  LambdaPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Sub "${AWS::StackName}"
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - dynamodb:CreateTable
+          - dynamodb:PutItem
+          - dynamodb:Scan
+          - s3:CreateBucket
+          - s3:PutBucketAcl
+          - s3:PutBucketPolicy
+          Resource: "*"
+      Roles: 
+      - !Ref LambdaRole
+
+  CreateDynamoFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket: private-test-lambda-tyson
+        S3Key: "code.zip"
+      Handler: createdynamo.handler
+      Runtime: nodejs6.10
+      FunctionName: createdynamo
+      Description: Lambda function to create a dynamo table
+      Timeout: 5
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          attributeName: bucketname
+          tableName: Public-S3-Buckets
+
+  PutDynamoFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket: private-test-lambda-tyson
+        S3Key: "code.zip"
+      Handler: putdynamo.handler
+      Runtime: nodejs6.10
+      FunctionName: putdynamo
+      Description: Lambda function to populate a dynamo table
+      Timeout: 5
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          item: bucketname
+          tableName: Public-S3-Buckets
+          buckets: zzzzstevetest1 zzzzstevetest123
+
+  CreateS3Function:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Code:
+        S3Bucket: private-test-lambda-tyson
+        S3Key: "code.zip"
+      Handler: creates3.handler
+      Runtime: nodejs6.10
+      FunctionName: creates3
+      Description: Lambda function to create pre-approved public S3 buckets
+      Timeout: 5
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          attributeName: bucketname
+          tableName: Public-S3-Buckets
+
+Outputs:
+
+  LambdaPolicy:
+    Value: !Ref LambdaPolicy
+    Export:
+      Name: !Sub "${AWS::StackName}::LambdaPolicy"
+
+  LambdaRole:
+    Value: !Ref LambdaRole
+    Export:
+      Name: !Sub "${AWS::StackName}::LambdaRole"
+
+  LambdaRoleArn:
+    Value: !GetAtt LambdaRole.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}::LambdaRoleArn"
+
+  CreateDynamoFunction:
+    Value: !Ref CreateDynamoFunction
+    Export:
+      Name: !Sub "${AWS::StackName}::CreateDynamoFunction"
+
+  PutDynamoFunction:
+    Value: !Ref PutDynamoFunction
+    Export: 
+      Name: !Sub "${AWS::StackName}::PutDynamoFunction"
+
+  CreateS3Function:
+    Value: !Ref CreateS3Function
+    Export:
+      Name: !Sub "${AWS::StackName}::CreateS3Function"
