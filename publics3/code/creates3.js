@@ -1,7 +1,7 @@
 /**
 * A sample Lambda function that creates a public S3 bucket and applys a restrictive policy
 **/
-  
+
 // This includes the AWS module inside your JS code
 // This allows you to call functions / methods in the aws-sdk
 // https://aws.amazon.com/sdk-for-node-js/
@@ -9,13 +9,13 @@ var aws = require("aws-sdk");
 
 // This creates a service interface object (function to query the dynamo api) - https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html
 var dynamodb = new aws.DynamoDB({region: 'ap-southeast-2'});
+
 // This creates a service interface object (function to query the s3 api) - https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
 var s3 = new aws.S3;
 
 //Scan a table for ALL entries, iterate through them and for each send a "create s3 bucket api call"
-//Please note this EXPECTS to receive content with a key of "bucketname", if not it will fail
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#scan-property
-function scanDynamo(tableName) {
+function scanDynamo(tableName, attributeName) {
   dynamodb.scan({TableName: tableName}, function(err, dynamoresults) {
     if (err) {
       console.log(err, err.stack);
@@ -23,8 +23,9 @@ function scanDynamo(tableName) {
     else {
       var items = dynamoresults.Items;
       for (var j = 0 ; j < items.length; j++) {
-      console.log(items[j].bucketname.S);
-      CreateS3Bucket(items[j].bucketname.S)
+        //you cannot include a variable inside an object property, to get around this attributeName needs to be enclosed in square brackets
+        console.log("Sending call to create s3 bucket " + items[j][attributeName].S);
+        CreateS3Bucket(items[j][attributeName].S)
       }
     }
   });
@@ -78,6 +79,8 @@ function addS3BucketPolicy(bucketName) {
     ]
   };
 
+  //putBucketPolicy expects data to be in string format
+  //JSON.stringify transforms var bucketPolicy from an object to a string
   var bucketPolicyParams = {Bucket: bucketName, Policy: JSON.stringify(bucketPolicy)};
 
   //set the new policy on the selected bucket
@@ -100,6 +103,6 @@ function addS3BucketPolicy(bucketName) {
 // Context info is here https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html
 exports.handler = function(event, context) {  
 
-  scanDynamo(process.env.tableName);
+  scanDynamo(process.env.tableName, process.env.attributeName);
 
 }
