@@ -44,7 +44,7 @@ export PATH
 * Install necessary aws tools - `pip install awscli aws-shell aws-sam-cli --upgrade --user`
 * login to docker from your terminal - `docker login`
 * cd into the code directory - `cd code`
-* run a test invocation of sam local - `sam local invoke -e sampleevent.json createdynamo`
+* run a test invocation of sam local - `sam local invoke -e sampleevent.json createdynamo` - (This will actually run the function and create a table)
 
 ### Sam Local ###
 * [SAM-local](https://docs.aws.amazon.com/lambda/latest/dg/test-sam-cli.html) is well documented by AWS.
