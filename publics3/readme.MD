@@ -37,7 +37,7 @@ A few small generic lambda functions for managing public S3 buckets.
 ```
 cat ~/.bash_profile
 # Setting PATH for Python 2.7
-PATH="/Users/steventyson/Library/Python/2.7/bin:${PATH}"
+PATH="/Users/loggedinuser/Library/Python/2.7/bin:${PATH}"
 export PATH
 ```
 * Update pip and setup tools - `sudo -H pip install --upgrade --ignore-installed pip setuptool`
