@@ -1,14 +1,14 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 
-Description: CF for an S3 bucket to host lambda functions
+Description: CF to create an S3 bucket to host lambda functions
 
 Resources:
   
   Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      BucketName: private-test-lambda-tyson
+      BucketName: lambda-s3-bucket
       AccessControl: Private
       
 Outputs:

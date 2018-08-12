@@ -1,10 +1,11 @@
 ---
 ###This is a local template only needed when invoking the function using samlocal - https://github.com/awslabs/aws-sam-cli
+###Please note that the template resource name, function file name and handler must all match for each function to run in sam local
 AWSTemplateFormatVersion : '2010-09-09'
 
 Transform: AWS::Serverless-2016-10-31
 
-Description: A simple Hello World Serverless project
+Description: Template to create a public S3 bucket solution
 
 Resources:
 

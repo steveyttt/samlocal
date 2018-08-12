@@ -48,12 +48,12 @@ export PATH
 
 ### Sam Local ###
 * [SAM-local](https://docs.aws.amazon.com/lambda/latest/dg/test-sam-cli.html) is well documented by AWS.
-* This tool can be used for almosy 100% local lambda and apigateway testing, provided you have the above tools installed.
+* This tool can be used for almost 100% local lambda and apigateway testing, provided you have the above tools installed.
 * An example local test invocation looks like this - `sam local invoke -e sampleevent.json createdynamo`
 * The tool relies on a template.yaml file residing with your code. Check the doco for in-depth info.
 
 ### Deployment ###
-* Deploy s3 bucket to hold lambda functions - `cloudformation create-stack --stack-name lambda-s3-bucket --template-body file://cloudformation/lambda-s3-bucket.yaml`
+* Deploy an s3 bucket to hold lambda functions - `cloudformation create-stack --stack-name lambda-s3-bucket --template-body file://cloudformation/lambda-s3-bucket.yaml`
 * cd into the code directory and run - `zip -r ../code .`
-* Copy code zip to the lambda s3 bucket -  `aws s3 cp code.zip s3://private-test-lambda-tyson/code.zip`
-* Deploy lambda functions - `cloudformation create-stack --stack-name lambda --template-body file://cloudformation/lambda.yaml --capabilities CAPABILITY_IAM`
+* Copy code zip to the lambda s3 bucket -  `aws s3 cp code.zip s3://lambda-s3-bucket/code.zip`
+* Deploy lambda functions - `cloudformation create-stack --stack-name s3-bucket-lambda-solution --template-body file://cloudformation/lambda.yaml --capabilities CAPABILITY_IAM`
