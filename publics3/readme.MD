@@ -18,6 +18,7 @@ A few small generic lambda functions for managing public S3 buckets.
 * Add tags to the cf deployment commands
 * Change policy on bucket to restrict on more IP's and file types
 * Get the creates3 function to run on cron
+* Create dynamo table using [CF](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-dynamodb-table.html)
 
 ### What versions used? ###
 * python 2.7.10
