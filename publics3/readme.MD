@@ -29,6 +29,7 @@ A few small generic lambda functions for managing public S3 buckets.
 * Docker version 18.03.0-ce
 
 ### How can I test it? ###
+* You will require keys / access for your AWS account first
 * Install [python](https://www.python.org/downloads/)
 * Install [docker](https://docs.docker.com/docker-for-mac/install/)
 * Install pip - `curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py`
