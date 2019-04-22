@@ -1,6 +1,13 @@
 # samlocal
 https://github.com/awslabs/aws-sam-local  
 
+##Figuring out IP usage for private lambda invocation
+https://www.jeremydaly.com/mixing-vpc-and-non-vpc-lambda-functions-for-higher-performing-microservices/
+
+`Projected peak concurrent executions * (Memory assigned in GB / 3GB)`
+i.e. 500 (simultaneous invocations) * (2 / 3) = 334 ENI's
+
+
 Pre-Reqs:  
 Install node.js  
 npm install -g sam-local  
